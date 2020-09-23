@@ -6,10 +6,12 @@ from .models import Snippet
 
 class SnippetSerializer( serializers.ModelSerializer ):
     owner = serializers.ReadOnlyField( source='owner.username' )
+    highlight = serializers.HyperlinkedIdentityField( view_name='snippet-highlight', format='html' )
 
     class Meta:
         model = Snippet
-        fields = ['id', 'title', 'code', 'linenos', 'language', 'style', 'owner']
+        fields = ['url', 'id', 'highlight', 'owner',
+                  'title', 'code', 'linenos', 'language', 'style']
 
 
 class UserSerializer( serializers.ModelSerializer ):
@@ -17,4 +19,4 @@ class UserSerializer( serializers.ModelSerializer ):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'snippets',]
+        fields = ['url', 'id', 'username', 'snippets', ]
